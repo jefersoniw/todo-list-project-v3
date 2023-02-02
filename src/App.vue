@@ -4,7 +4,7 @@
         <div class="w-full sm:w-1/2 lg:w-1/3 mx-auto">
 
             <pre>
-                <!-- {{ $store.state.todos }} -->
+                 {{ $store.state.todos }} 
             </pre>
             <!-- Todo spinner -->
             <TodoSpinner v-if="loading" />
