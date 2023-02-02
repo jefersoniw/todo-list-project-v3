@@ -19,8 +19,6 @@
                 <TodoItems />
                 <!--/ Todo items -->
 
-                <br>
-
                 <!-- Todo empty -->
                 <TodoEmpty />
                 <!--/ Todo empty -->
