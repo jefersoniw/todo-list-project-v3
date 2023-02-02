@@ -30,7 +30,17 @@ export default {
 
     methods: {
         addTodo() {
-            console.log('submeteu');
+
+            if (this.title == '') {
+                return false;
+            }
+
+            this.$store.dispatch('addTodo', {
+                title: this.title,
+                completed: false
+            }).finally(() => {
+                this.title = ''
+            })
         }
     },
 };
