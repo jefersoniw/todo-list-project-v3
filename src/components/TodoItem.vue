@@ -12,7 +12,7 @@ mr-2">
       </div>
 
       <div class="w-full">
-        <input type="text" placeholder="Digite a sua tarefa" :value="todo.title" class="bg-gray-300 placeholder-gray-500
+        <input :id="todo.id" type="text" placeholder="Digite a sua tarefa" :value="todo.title" class="bg-gray-300 placeholder-gray-500
 text-gray-700 font-light focus:outline-none block w-full appearance-none
 leading-normal mr-3">
       </div>
