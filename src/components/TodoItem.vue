@@ -1,10 +1,11 @@
 <template>
   <div class="bg-gray-300 rounded-sm">
-    <div class="flex items-center px-4 py-3 border-b
-border-gray-400 last:border-b-0">
-      <div class="flex items-center justify-center
-mr-2">
-        <button class="text-gray-400">
+    <div class="flex items-center px-4 py-3 border-b border-gray-400 last:border-b-0">
+      <div class="flex items-center justify-center mr-2">
+        <button :class="{
+          'text-gray-400': !isCompleted,
+          'text-green-600': isCompleted
+        }" @click="onCheckClick">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
           </svg>
@@ -12,15 +13,13 @@ mr-2">
       </div>
 
       <div class="w-full">
-        <input :id="todo.id" type="text" placeholder="Digite a sua tarefa" :value="todo.title" class="bg-gray-300 placeholder-gray-500
-text-gray-700 font-light focus:outline-none block w-full appearance-none
-leading-normal mr-3">
+        <input v-model="title" :id="todo.id" type="text" placeholder="Digite a sua tarefa" @keyup.enter="onTitleChange"
+          class="block w-full mr-3 font-light leading-normal text-gray-700 placeholder-gray-500 bg-gray-300 appearance-none focus:outline-none">
       </div>
 
-      <div class="ml-auto flex items-center
-justify-center">
+      <div class="flex items-center justify-center ml-auto">
         <button class="focus:outline-none">
-          <svg class="ml-3 h-4 w-4 text-gray-500" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+          <svg class="w-4 h-4 ml-3 text-gray-500" viewBox="0 0 24 24" fill="none" stroke="currentColor"
             xmlns="http://www.w3.org/2000/svg">
             <path d="M19 7L18.1327 19.1425C18.0579
 20.1891 17.187 21 16.1378 21H7.86224C6.81296 21 5.94208 20.1891 5.86732
@@ -40,6 +39,45 @@ export default {
       type: Object,
       default: () => ({}),
     },
+  },
+
+  data() {
+    return {
+      isCompleted: this.todo.completed,
+      title: this.todo.title
+    }
+  },
+
+  methods: {
+
+    onTitleChange() {
+      if (!this.title) {
+        return;
+      }
+
+      this.updateTodo()
+    },
+
+    onCheckClick() {
+      this.isCompleted = !this.isCompleted
+      this.updateTodo()
+
+    },
+
+    updateTodo() {
+
+      const payload = {
+        id: this.todo.id,
+        data: {
+          title: this.title,
+          completed: this.isCompleted
+        }
+      }
+
+      this.$store.dispatch('updateTodo', payload)
+    },
+
+
   },
 }
 </script>
