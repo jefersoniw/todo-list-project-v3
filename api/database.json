@@ -6,44 +6,14 @@
       "id": 1
     },
     {
-      "title": "Estudar Vue",
-      "completed": true,
+      "title": "Estudar Vue Js",
+      "completed": false,
       "id": 2
     },
     {
-      "id": 3,
-      "title": "Estudar composition API",
-      "completed": false
-    },
-    {
-      "title": "Realizar tarefas do dia de hoje",
-      "completed": false,
-      "id": 4
-    },
-    {
-      "title": "tarefa sexta feira",
-      "completed": false,
-      "id": 5
-    },
-    {
-      "title": "Estudar Vue Segunda Feira",
-      "completed": false,
-      "id": 6
-    },
-    {
-      "title": "NOVO ITEM",
-      "completed": false,
-      "id": 7
-    },
-    {
-      "title": "testando ",
-      "completed": false,
-      "id": 8
-    },
-    {
-      "title": "novo item ",
-      "completed": false,
-      "id": 9
+      "title": "Estudar laravel",
+      "completed": true,
+      "id": 3
     }
   ]
 }
