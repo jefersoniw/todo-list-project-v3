@@ -4,7 +4,7 @@
       <div class="flex items-center justify-center mr-2">
         <button :class="{
           'text-gray-400': !isCompleted,
-          'text-green-600': isCompleted
+          'text-green-700': isCompleted
         }" @click="onCheckClick">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
@@ -18,7 +18,7 @@
       </div>
 
       <div class="flex items-center justify-center ml-auto">
-        <button class="focus:outline-none">
+        <button @click="onDelete" class="focus:outline-none">
           <svg class="w-4 h-4 ml-3 text-gray-500" viewBox="0 0 24 24" fill="none" stroke="currentColor"
             xmlns="http://www.w3.org/2000/svg">
             <path d="M19 7L18.1327 19.1425C18.0579
@@ -77,7 +77,14 @@ export default {
       this.$store.dispatch('updateTodo', payload)
     },
 
+    onDelete() {
+      this.$store.dispatch('deleteTodo', this.todo.id)
+    }
+
 
   },
 }
+
 </script>
+
+
