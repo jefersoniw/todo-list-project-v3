@@ -33,6 +33,7 @@
 </template>
 
 <script>
+import toastr from 'toastr';
 export default {
   props: {
     todo: {
@@ -55,16 +56,20 @@ export default {
         return;
       }
 
-      this.updateTodo()
+      const params = 1
+      this.updateTodo(params)
     },
 
     onCheckClick() {
       this.isCompleted = !this.isCompleted
-      this.updateTodo()
+
+      const params = 2
+
+      this.updateTodo(params)
 
     },
 
-    updateTodo() {
+    updateTodo(params) {
 
       const payload = {
         id: this.todo.id,
@@ -75,14 +80,20 @@ export default {
       }
 
       this.$store.dispatch('updateTodo', payload).finally(() => {
-        alert('editado com sucesso')
+        if (params === 1) {
+          toastr.warning('Tarefa editada com sucesso!')
+        } else {
+          toastr.success('Tarefa realizada!')
+        }
+
       })
     },
 
     onDelete() {
-      this.$store.dispatch('deleteTodo', this.todo.id)
+      this.$store.dispatch('deleteTodo', this.todo.id).finally(() => {
+        toastr.error('Tarefa apagada!')
+      })
     }
-
 
   },
 }
