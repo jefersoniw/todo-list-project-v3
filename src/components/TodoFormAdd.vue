@@ -1,13 +1,11 @@
 <template>
     <div>
-        <form @submit.prevent="addTodo" class="flex items-center px-4 bg-gray-900 h-15
-rounded-sm border-l-2 border-green-400 mb-3">
-            <input v-model="title" placeholder="Adicione um novo item ..." type="text" class="bg-gray-900 placeholder-gray-500 text-gray-500
-font-light focus:outline-none block w-full appearance-none leading-normal
-py-3 pr-3">
+        <form @submit.prevent="addTodo"
+            class="flex items-center px-4 mb-3 bg-gray-900 border-l-2 border-green-400 rounded-sm h-15">
+            <input v-model="title" placeholder="Adicione um novo item ..." type="text"
+                class="block w-full py-3 pr-3 font-light leading-normal text-gray-500 placeholder-gray-500 bg-gray-900 appearance-none focus:outline-none">
 
-            <button class="text-green-400 text-xs font-semibold
-focus:outline-none" type="submit">
+            <button class="text-xs font-semibold text-green-400 focus:outline-none" type="submit">
                 ADICIONAR
             </button>
         </form>
@@ -15,6 +13,8 @@ focus:outline-none" type="submit">
 </template>
 
 <script>
+import toastr from 'toastr'
+
 export default {
     name: 'TodoListProjectTodoFormAdd',
 
@@ -40,6 +40,7 @@ export default {
                 completed: false
             }).finally(() => {
                 this.title = ''
+                toastr.success('Tarefa cadastrada!')
             })
         }
     },
