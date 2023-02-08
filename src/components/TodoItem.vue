@@ -3,8 +3,8 @@
     <div class="flex items-center px-4 py-3 border-b border-gray-400 last:border-b-0">
       <div class="flex items-center justify-center mr-2">
         <button :class="{
-          'text-gray-400': !isCompleted,
-          'text-green-700': isCompleted
+          'text-gray-400 font-bold': !isCompleted,
+          'text-green-700 font-bold': isCompleted
         }" @click="onCheckClick">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
@@ -14,7 +14,7 @@
 
       <div class="w-full">
         <input v-model="title" :id="todo.id" type="text" placeholder="Digite a sua tarefa" @keyup.enter="onTitleChange"
-          class="block w-full mr-3 font-light leading-normal text-gray-700 placeholder-gray-500 bg-gray-300 appearance-none focus:outline-none">
+          class="block w-full mr-3 font-light font-bold leading-normal text-black placeholder-gray-500 bg-gray-300 appearance-none focus:outline-none">
       </div>
 
       <div class="flex items-center justify-center ml-auto">
@@ -33,6 +33,7 @@
 </template>
 
 <script>
+import toastr from 'toastr';
 export default {
   props: {
     todo: {
@@ -55,16 +56,20 @@ export default {
         return;
       }
 
-      this.updateTodo()
+      const params = 1
+      this.updateTodo(params)
     },
 
     onCheckClick() {
       this.isCompleted = !this.isCompleted
-      this.updateTodo()
+
+      const params = 2
+
+      this.updateTodo(params)
 
     },
 
-    updateTodo() {
+    updateTodo(params) {
 
       const payload = {
         id: this.todo.id,
@@ -74,13 +79,21 @@ export default {
         }
       }
 
-      this.$store.dispatch('updateTodo', payload)
+      this.$store.dispatch('updateTodo', payload).finally(() => {
+        if (params === 1) {
+          toastr.warning('Tarefa editada com sucesso!')
+        } else {
+          toastr.success('Tarefa realizada!')
+        }
+
+      })
     },
 
     onDelete() {
-      this.$store.dispatch('deleteTodo', this.todo.id)
+      this.$store.dispatch('deleteTodo', this.todo.id).finally(() => {
+        toastr.error('Tarefa apagada!')
+      })
     }
-
 
   },
 }
