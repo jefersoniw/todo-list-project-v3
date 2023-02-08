@@ -63,9 +63,16 @@ export default {
     onCheckClick() {
       this.isCompleted = !this.isCompleted
 
-      const params = 2
+      if (this.isCompleted === false) {
+        let params = 2;
 
-      this.updateTodo(params)
+        this.updateTodo(params)
+      } else {
+        let params = 3;
+
+        this.updateTodo(params)
+      }
+
 
     },
 
@@ -82,6 +89,8 @@ export default {
       this.$store.dispatch('updateTodo', payload).finally(() => {
         if (params === 1) {
           toastr.warning('Tarefa editada com sucesso!')
+        } else if (params === 2) {
+          toastr.error('Tarefa não realizada!')
         } else {
           toastr.success('Tarefa realizada!')
         }

@@ -1,17 +1,17 @@
 {
   "todos": [
     {
-      "title": "estudar laravel",
+      "title": "Estudar Laravel",
       "completed": true,
       "id": 2
     },
     {
-      "title": "estudar javascript",
+      "title": "Estudar Javascript",
       "completed": true,
       "id": 3
     },
     {
-      "title": "estudar composition api",
+      "title": "Estudar Vue.js",
       "completed": false,
       "id": 4
     }
