@@ -22,9 +22,10 @@
           <svg class="w-4 h-4 ml-3 text-gray-500" viewBox="0 0 24 24" fill="none" stroke="currentColor"
             xmlns="http://www.w3.org/2000/svg">
             <path d="M19 7L18.1327 19.1425C18.0579
-20.1891 17.187 21 16.1378 21H7.86224C6.81296 21 5.94208 20.1891 5.86732
-19.1425L5 7M10 11V17M14 11V17M15 7V4C15 3.44772 14.5523 3 14 3H10C9.44772
-3 9 3.44772 9 4V7M4 7H20" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                                                                  20.1891 17.187 21 16.1378 21H7.86224C6.81296 21 5.94208 20.1891 5.86732
+                                                                                  19.1425L5 7M10 11V17M14 11V17M15 7V4C15 3.44772 14.5523 3 14 3H10C9.44772
+                                                                                  3 9 3.44772 9 4V7M4 7H20"
+              stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
           </svg>
         </button>
       </div>
@@ -34,6 +35,8 @@
 
 <script>
 import toastr from 'toastr';
+import { ref } from 'vue';
+import { useStore } from 'vuex';
 export default {
   props: {
     todo: {
@@ -42,51 +45,46 @@ export default {
     },
   },
 
-  data() {
-    return {
-      isCompleted: this.todo.completed,
-      title: this.todo.title
-    }
-  },
+  setup(props) {
 
-  methods: {
+    const title = ref(props.todo.title);
+    const isCompleted = ref(props.todo.completed);
+    const store = useStore()
 
-    onTitleChange() {
-      if (!this.title) {
+    const onTitleChange = () => {
+      if (!title.value) {
         return;
       }
 
       const params = 1
-      this.updateTodo(params)
-    },
+      updateTodo(params)
+    }
 
-    onCheckClick() {
-      this.isCompleted = !this.isCompleted
+    const onCheckClick = () => {
+      isCompleted.value = !isCompleted.value
 
-      if (this.isCompleted === false) {
+      if (isCompleted.value === false) {
         let params = 2;
 
-        this.updateTodo(params)
+        updateTodo(params)
       } else {
         let params = 3;
 
-        this.updateTodo(params)
+        updateTodo(params)
       }
+    }
 
-
-    },
-
-    updateTodo(params) {
+    const updateTodo = (params) => {
 
       const payload = {
-        id: this.todo.id,
+        id: props.todo.id,
         data: {
-          title: this.title,
-          completed: this.isCompleted
+          title: title.value,
+          completed: isCompleted.value
         }
       }
 
-      this.$store.dispatch('updateTodo', payload).finally(() => {
+      store.dispatch('updateTodo', payload).finally(() => {
         if (params === 1) {
           toastr.warning('Tarefa editada com sucesso!')
         } else if (params === 2) {
@@ -96,15 +94,23 @@ export default {
         }
 
       })
-    },
+    }
 
-    onDelete() {
-      this.$store.dispatch('deleteTodo', this.todo.id).finally(() => {
+    const onDelete = () => {
+      store.dispatch('deleteTodo', props.todo.id).finally(() => {
         toastr.error('Tarefa apagada!')
       })
     }
 
-  },
+    return {
+      title,
+      isCompleted,
+      onDelete,
+      updateTodo,
+      onCheckClick,
+      onTitleChange,
+    }
+  }
 }
 
 </script>

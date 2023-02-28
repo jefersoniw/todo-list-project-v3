@@ -14,34 +14,34 @@
 
 <script>
 import toastr from 'toastr'
+import { ref } from 'vue';
+import { useStore } from 'vuex';
 
 export default {
     name: 'TodoListProjectTodoFormAdd',
 
-    data() {
-        return {
-            title: ''
-        };
-    },
+    setup() {
+        const title = ref('');
+        const store = useStore();
 
-    mounted() {
+        const addTodo = () => {
 
-    },
-
-    methods: {
-        addTodo() {
-
-            if (this.title == '') {
+            if (title.value == '') {
                 return false;
             }
 
-            this.$store.dispatch('addTodo', {
-                title: this.title,
+            store.dispatch('addTodo', {
+                title: title.value,
                 completed: false
             }).finally(() => {
-                this.title = ''
+                title.value = ''
                 toastr.success('Tarefa cadastrada!')
             })
+        }
+
+        return {
+            title,
+            addTodo
         }
     },
 };
