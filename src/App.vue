@@ -38,24 +38,26 @@ import TodoSpinner from './components/TodoSpinner.vue'
 import TodoItems from './components/TodoItems.vue'
 import TodoEmpty from './components/TodoEmpty.vue'
 import TodoTitle from './components/TodoTitle.vue'
+import { ref } from 'vue'
+import { useStore } from 'vuex'
 
 export default {
-    components: { TodoSpinner, TodoFormAdd, TodoItems, TodoEmpty, TodoTitle },
     name: 'App',
+    components: { TodoSpinner, TodoFormAdd, TodoItems, TodoEmpty, TodoTitle },
 
-    data() {
+    setup() {
+        const loading = ref(false);
+        const store = useStore()
+
+        loading.value = true;
+        store.dispatch('getTodos').finally(() => {
+            loading.value = false;
+        });
+
         return {
-            loading: false
+            loading,
         }
     },
-
-    created() {
-        this.loading = true;
-        this.$store.dispatch('getTodos').finally(() => {
-            this.loading = false;
-        });
-    },
-
 }
 </script>
 
