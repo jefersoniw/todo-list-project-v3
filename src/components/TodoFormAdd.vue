@@ -22,7 +22,7 @@ export default {
 
     setup() {
         const title = ref('');
-        const store = useStore;
+        const store = useStore();
 
         const addTodo = () => {
 
